@@ -26,7 +26,7 @@ for library, alias in required_libraries:
 from CSVNormalizer import CSVNormalizer
 
 class Dataset:
-    def __init__(self, datasetPath, numberOfFeatures, hasIndex=True, normalize=True):
+    def __init__(self, datasetPath, numberOfFeatures=0, normalize=True):
         self.datasetPath = datasetPath
         datasetPathSplited = self.datasetPath.split('.')
         fileExtension = datasetPathSplited.pop(-1)
@@ -37,11 +37,9 @@ class Dataset:
         
 
     # It's expected the columns: index, feature1, feature2, ..., featureN, label(class)
-    def normalizeCSV(self, hasIndex=True, numberOfFeatures=1):
+    def normalizeCSV(self, columns_to_keep=[], output_file_name=None):        
         normalizer = CSVNormalizer(self.datasetPath)
-        indexOfFeature1 = 1 if hasIndex else 0 # = (hasIndex) ? 1 : 0;
-        numberOfFeatures = (numberOfFeatures-1)+indexOfFeature1
-        normalizer.normalize_columns_between_a_and_z(indexOfFeature1, numberOfFeatures, self.normalizedFilePath)
+        normalizer.normalize_and_save_columns(columns_to_keep, self.normalizedFilePath)
 
     
     def preAnalisys(self):
@@ -59,6 +57,6 @@ class Dataset:
         ds.info()
 
 #Definindo um dataset
-dataset = Dataset('/home/jader/Mestrado/DatasetsAnalisys/Iris.csv')
-dataset.normalizeCSV(hasIndex=True, numberOfFeatures=4)
+dataset = Dataset('Iris.csv')
+dataset.normalizeCSV()
 dataset.preAnalisys()

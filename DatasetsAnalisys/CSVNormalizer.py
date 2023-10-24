@@ -19,15 +19,21 @@ class CSVNormalizer:
             self.df = None
 
 
-    def normalize_and_save_columns(self, columns_to_keep, output_file_name):
+    def normalize_and_save_columns(self, columns_to_keep=[], output_file_name=None):
         if self.df is None:
             print("Não é possível normalizar. O DataFrame não foi carregado corretamente.")
             return
+        
+        #If none columns is especified, all of the columns is kept 
+        if columns_to_keep == []:
+            columns_to_keep = [i for i in range(len(self.df.columns))]
+        
+        # If output_file_name is not especified, it will is 'normalized_' concatenated with the current name of the file
+        output_file_name = 'normalized_'+self.file_name if output_file_name == None else output_file_name
 
         try:
             indexColumnName = self.df.columns[0]
             classColumnName = self.df.columns[-1]
-            #print('%s, %s' % (indexColumnName, classColumnName))
 
             # Identify the columns to keep using your names
             columns_to_normalize = [col for col in self.df.columns if col not in [indexColumnName, classColumnName] and self.df.columns.get_loc(col) in columns_to_keep]
@@ -82,7 +88,7 @@ if __name__ == "__main__":
             separator = ','  # Specify the separator if needed
 
             normalizer = CSVNormalizer(file_name, separator)
-            normalizer.normalize_and_save_columns(columns_to_keep, output_file_name)
+            normalizer.normalize_and_save_columns()
     else:
         print("No CSV files found in the directory.")
 
