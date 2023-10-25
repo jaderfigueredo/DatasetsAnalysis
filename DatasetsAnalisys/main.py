@@ -42,7 +42,7 @@ class Dataset:
         normalizer.normalize_and_save_columns(columns_to_keep, self.normalizedFilePath)
 
     
-    def preAnalisys(self):
+    def preAnalysis(self):
         ds = pd.read_csv(self.normalizedFilePath)
         print('Dados importados\n')
 
@@ -59,4 +59,4 @@ class Dataset:
 #Definindo um dataset
 dataset = Dataset('Iris.csv')
 dataset.normalizeCSV()
-dataset.preAnalisys()
+dataset.preAnalysis()
