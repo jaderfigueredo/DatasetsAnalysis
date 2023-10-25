@@ -40,6 +40,7 @@ class Dataset:
     def normalizeCSV(self, columns_to_keep=[], output_file_name=None):        
         normalizer = CSVNormalizer(self.datasetPath)
         normalizer.normalize_and_save_columns(columns_to_keep, self.normalizedFilePath)
+        self.df = normalizer.df
 
     
     def preAnalysis(self):
@@ -60,3 +61,6 @@ class Dataset:
 dataset = Dataset('Iris.csv')
 dataset.normalizeCSV()
 dataset.preAnalysis()
+print('')
+print('Dataset:')
+print(dataset.df)

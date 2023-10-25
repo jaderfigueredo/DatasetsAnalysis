@@ -58,7 +58,7 @@ class CSVNormalizer:
                     try:
                         self.df[colName] = (col - min_value) / (max_value - min_value)
                     except Exception as e:
-                        print('Item %s: %s' % (colName, e))
+                        print('Não foi possível normalizar a coluna \'%s\': %s' % (colName, e))
 
             # Save the normalized DataFrame to a CSV file
             self.df.to_csv(output_file_name, index=False)
